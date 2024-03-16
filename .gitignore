@@ -2,4 +2,8 @@
 **/notes.txt
 **/*.pdf
 **/*.o
+**/*.out
+**/*.ali
+**/obj
 **/*.hi
+**/__pycache__

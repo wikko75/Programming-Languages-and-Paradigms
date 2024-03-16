@@ -1,0 +1,7 @@
+project functions_loop is
+   for Source_Files use ("functions_loop.adb");        
+   for Library_Name use "functions_loop"; 
+   for Object_Dir   use "obj/functions_loop";
+   for Library_Dir  use "lib/functions_loop"; 
+   for Library_Kind use "static";
+end functions_loop;

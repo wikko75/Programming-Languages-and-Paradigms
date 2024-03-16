@@ -1,0 +1,6 @@
+project functions_test is
+    for Source_Files use ("functions_test.adb", "functions.adb");  
+    for Object_Dir   use "obj";
+    for Exec_Dir     use ".";
+    for Main         use ("functions_test.adb");
+end functions_test;

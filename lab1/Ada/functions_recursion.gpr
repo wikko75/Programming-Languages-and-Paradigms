@@ -1,0 +1,7 @@
+project functions_recursion is
+   for Source_Files use ("functions_recursion.adb");        
+   for Library_Name use "functions_recursion"; 
+   for Object_Dir   use "obj/functions_recursion";
+   for Library_Dir  use "lib/functions_recursion";
+   for Library_Kind use "static";
+end functions_recursion;
