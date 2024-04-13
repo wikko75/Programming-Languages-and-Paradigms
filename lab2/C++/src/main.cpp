@@ -28,8 +28,7 @@ int main()
     fmt::print("int64 * b = {}\n", (1234578 * b).value());
     fmt::print("a * int64 = {}\n\n", (a * 4).value());
 
-
-    fmt::print("a = {}\n~a = {}\n", a.value(), (~b).value());
+    fmt::print("a = {}\n~a = {}\n", a.value(), (~a).value());
     fmt::print("Check: a * ~a = {}\n\n", (a * ~a).value());
 
     fmt::print("a / b = {}\n", (a / b).value());
@@ -37,63 +36,15 @@ int main()
     fmt::print("int64 / b = {}\n", (10 / b).value());
     fmt::print("a / int64 = {}\n\n", (a / 10).value());
 
+    fmt::print("a == b? {}\n", a == b);
+    fmt::print("{} == a? {}\n", 15, (15 == a));
+    fmt::print("a == b? {}\n", (a == b));
+    fmt::print("a != b? {}\n", (a != b));
 
-    if(15 == a)
-    {
-        fmt::print("equal!\n");
-    }
-    else
-    {
-        fmt::print("not equal!\n");
-    }
-
-
-    if (a == b)
-    {
-        fmt::print("equal!\n");
-
-    }
-    else
-    {
-
-        fmt::print("not equal!\n");
-    }
-
-    if (a != b)
-    {
-        fmt::print("not equal!\n");
-    }
-    else
-    {
-        fmt::print("equal!\n");
-    }
-
-    if(-20 <= a)
-    {
-        fmt::print("Smaller!\n");
-    }
-    else
-    {
-        fmt::print("Greater!\n");
-    }
-
-    if (a >= 5)
-    {
-        fmt::print("Greater!\n");
-    }
-    else
-    {
-        fmt::print("Smaller!\n");
-    }
-
-    if (5 >= b)
-    {
-        fmt::print("Greater!\n");
-    }
-    else
-    {
-        fmt::print("Smaller!\n");
-    }
+    fmt::print("-20 <= a? {}\n", (-20 <= a));
+    fmt::print("a >= 5? {}\n", (a >= 5));
+    fmt::print("5 >= b? {}\n", (5 >= b));
+    
 
     fmt::print(fmt::fg(fmt::color::yellow),"\nEnd values:\na = {}\nb = {}\n\n", a.value(), b.value());
 

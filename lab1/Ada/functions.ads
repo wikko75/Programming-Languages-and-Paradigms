@@ -9,6 +9,6 @@ package Functions is
         Y : Integer;
     end record;
 
-    function Diofantic_Eq (A, B : Integer) return Solution;
+    function Diofantic_Eq (A, B, C : Integer) return Solution;
 
 end Functions;

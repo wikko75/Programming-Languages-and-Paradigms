@@ -13,7 +13,7 @@ begin
     declare
         Diof_Eg_Res : Solution;
     begin
-        Diof_Eg_Res := Diofantic_Eq (A => 1914, B => 899);
+        Diof_Eg_Res := Diofantic_Eq (A => 1914, B => 899, C => 11);
         Print ("Testing Diofantic_Eq: [" & Integer'Image (Diof_Eg_Res.X) & ", " & Integer'Image (Diof_Eg_Res.Y) & " ]");
         
     end;

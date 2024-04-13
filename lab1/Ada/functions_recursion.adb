@@ -41,7 +41,7 @@ package body Functions is
         CTemp : Integer;
     begin
 
-        if  c mod (GCD(A => A, B => B)) /= 0 then
+        if  C mod (GCD(A => A, B => B)) /= 0 then
             Ada.Text_IO.Put_Line("Wrong c provided: c % GCD(A, B) != 0");
             Result := (X => -1, Y => -1);
             return Result;
