@@ -4,13 +4,15 @@
 #include "Galois.hpp"
 #include <fmt/color.h>
 #include <utility>
+#include <type_traits>
+
 
 
 template <u_int64_t Order>
 inline Galois<Order>::Galois(int64_t value)
    : m_value{value >= 0 ? static_cast<int64_t>(value % Order) : static_cast<int64_t>((Order + value) % Order)}
 {
-    
+    static_assert(Galois<Order>::is_prime(), "Field order must be a prime number");
 }
 
 
@@ -234,7 +236,7 @@ constexpr auto Galois<Order>::value() const noexcept -> int64_t
 
 
 template<u_int64_t Order>
-inline auto Galois<Order>::print_info() noexcept -> void
+constexpr auto Galois<Order>::print_info() noexcept -> void
 {
     fmt::print(fmt::fg(fmt::color::red), "=====================\n");
     fmt::print(fmt::fg(fmt::color::yellow), "Galois field\n");
@@ -242,6 +244,7 @@ inline auto Galois<Order>::print_info() noexcept -> void
     fmt::print("Order: {}\n", Order);
     fmt::print(fmt::fg(fmt::color::red), "=====================\n\n");
 }
+
 
 template <u_int64_t Order>
 constexpr auto Galois<Order>::diofantic_eq(int64_t a) const -> int64_t
@@ -264,6 +267,34 @@ constexpr auto Galois<Order>::diofantic_eq(int64_t a) const -> int64_t
     }
 
     return solution;
+}
+
+
+
+template <u_int64_t Order>
+    constexpr auto Galois<Order>::is_prime() -> bool
+{
+    if (Order < 2) 
+    {
+        return false;
+    }
+    if (Order < 4) 
+    {
+        return true;
+    }
+    if (Order % 2 == 0 || Order % 3 == 0) 
+    {
+        return false;
+    }
+    for (long i = 5; i * i <= Order; i += 6) 
+    {
+        if (Order % i == 0 || Order % (i + 2) == 0) 
+        {
+            return false;
+        }
+    }
+
+    return true;
 }
 
 #endif

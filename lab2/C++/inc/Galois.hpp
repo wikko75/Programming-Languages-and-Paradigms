@@ -94,14 +94,15 @@ public:
 
     constexpr auto value() const noexcept -> int64_t;
 
-    static auto print_info() noexcept -> void;
+
+    static constexpr auto print_info() noexcept -> void;
+    static constexpr auto is_prime() -> bool;
 
     ~Galois() = default;
 
 private:
     constexpr auto diofantic_eq(int64_t a) const -> int64_t;
 };
-
 
 #include "Galois.inl"
 

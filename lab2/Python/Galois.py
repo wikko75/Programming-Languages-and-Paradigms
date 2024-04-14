@@ -1,3 +1,5 @@
+import math
+
 class OrderMismatchException(Exception):
     def __init__(self, caused_by : str) -> None:
         super().__init__(f"{caused_by} called on object with different field order")
@@ -8,6 +10,8 @@ class Galois:
     _s_order : int = 1234577  
 
     def __init__(self, value : int = None, order = 1234577):
+        if not self._is_prime(order): 
+            raise Exception("Field order must be a prime number")
         self.order = order
         if value is not None:
             self.value = value % order if value >= 0 else (order - value)
@@ -106,6 +110,15 @@ class Galois:
               f"Default order: {Galois._s_order}\n"
               "=============\n")
 
+
+    def _is_prime(self, n : int) -> bool:
+            if n < 2:
+                return False
+            for a in range(2, int(math.sqrt(n)) + 1):
+                if n % a == 0:
+                    return False
+            return True
+    
 
     def _diofantic_eq(self, a : int) -> int:
         ''' 

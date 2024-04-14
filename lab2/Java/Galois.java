@@ -26,7 +26,10 @@ public class Galois {
     public Galois() {}
     
 
-    public Galois(long value, long order) {
+    public Galois(long value, long order) throws Exception {
+        if (!isPrime(order)) {
+            throw new Exception("Field order must be a prime number");
+        }
         m_order = order;
         m_value = value >= 0 ? value % m_order : (m_order + value);
     }
@@ -157,7 +160,21 @@ public class Galois {
         return m_order;
     }
 
+    
+    private boolean isPrime(long n) {
+        if (n < 2) {
+            return false;
+        }
+        long a = 2;
+        while (a <= Math.sqrt(n)) {
+            if (n % a == 0) {
+                return false;
+            }
+        }
+        return true;
+    }
 
+    
     private boolean checkOrder(Galois other) {
         if (this.m_order != other.m_order) {
             return false;
