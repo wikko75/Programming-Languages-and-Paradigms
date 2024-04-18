@@ -16,7 +16,7 @@ Additionaly **C++**:
 - overloads stream operators (insertion and extraction)
 - performs valid operations with left / right operand being an _int_64_t_ literal
 
-Since **Java** doesn't allow operator overloading, each operator has its coresponding action defined inside a member function.
+Since **Java** doesn't allow operator overloading, each operator has its corresponding action defined inside a member function.
 
 ## Build and Run
 ##  C++
