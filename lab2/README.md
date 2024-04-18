@@ -1,6 +1,13 @@
 # C++ / Java / Python implementation of finite field
+Reference: [Galois field](https://en.wikipedia.org/wiki/Finite_field)
+## Prerequisites
+* C++ 20+
+* [fmt](https://github.com/fmtlib/fmt) (installed on Linux)
+* CMake
+* Python
+* Java
 ## Details
-**C++** and **Python** overload given operators:
+**C++** and **Python** overload following operators:
 - compound assignment
 - arithmetic
 - relational
