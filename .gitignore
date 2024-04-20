@@ -1,6 +1,7 @@
 **/.vscode
 **/notes.txt
 **/*.pdf
+**/*.md
 **/*.o
 **/*.out
 **/*.ali

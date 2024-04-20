@@ -2,7 +2,7 @@
 #define GALOIS_HPP
 
 #include <iostream>
-
+#include <stdint.h>
 
 /**
  * Since I use Galois only in one .cpp file (main.cpp) that makes use of inline functions,
@@ -15,7 +15,7 @@
 
 
 
-template <u_int64_t Order>
+template <uint64_t Order>
 class Galois
 {
 private:
@@ -97,6 +97,8 @@ public:
 
     static constexpr auto print_info() noexcept -> void;
     static constexpr auto is_prime() -> bool;
+
+    static constexpr auto get_order() noexcept -> uint64_t;
 
     ~Galois() = default;
 

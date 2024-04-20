@@ -160,7 +160,7 @@ public class Galois {
         return m_order;
     }
 
-    
+
     private boolean isPrime(long n) {
         if (n < 2) {
             return false;
@@ -170,6 +170,7 @@ public class Galois {
             if (n % a == 0) {
                 return false;
             }
+            ++a;
         }
         return true;
     }

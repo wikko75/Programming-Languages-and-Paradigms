@@ -4,11 +4,11 @@
 #include "Galois.hpp"
 #include <fmt/color.h>
 #include <utility>
-#include <type_traits>
+#include <stdint.h>
 
 
 
-template <u_int64_t Order>
+template <uint64_t Order>
 inline Galois<Order>::Galois(int64_t value)
    : m_value{value >= 0 ? static_cast<int64_t>(value % Order) : static_cast<int64_t>((Order + value) % Order)}
 {
@@ -16,7 +16,7 @@ inline Galois<Order>::Galois(int64_t value)
 }
 
 
-template <u_int64_t Order>
+template <uint64_t Order>
 constexpr auto Galois<Order>::operator+=(const Galois<Order>& other) -> Galois<Order>&
 {
     m_value = (m_value + other.m_value) % Order;
@@ -24,7 +24,7 @@ constexpr auto Galois<Order>::operator+=(const Galois<Order>& other) -> Galois<O
 }
 
 
-template <u_int64_t Order>
+template <uint64_t Order>
 constexpr auto Galois<Order>::operator-=(const Galois<Order>& other) -> Galois<Order>&
 {
     // a -= b  ->  -b => (order - b)  
@@ -34,7 +34,7 @@ constexpr auto Galois<Order>::operator-=(const Galois<Order>& other) -> Galois<O
 }
 
 
-template <u_int64_t Order>
+template <uint64_t Order>
 constexpr auto Galois<Order>::operator*=(const Galois<Order>& other) -> Galois<Order>&
 {
     m_value = (m_value * other.m_value) % Order;
@@ -42,7 +42,7 @@ constexpr auto Galois<Order>::operator*=(const Galois<Order>& other) -> Galois<O
 }
 
 
-template <u_int64_t Order>
+template <uint64_t Order>
 constexpr auto Galois<Order>::operator/=(const Galois<Order>& other) -> Galois<Order>&
 {
     *this *= ~other;
@@ -50,7 +50,7 @@ constexpr auto Galois<Order>::operator/=(const Galois<Order>& other) -> Galois<O
 }
 
 
-template <u_int64_t Order>
+template <uint64_t Order>
 constexpr auto Galois<Order>::operator~() const -> Galois
 {
     return {diofantic_eq(m_value)};
@@ -58,140 +58,140 @@ constexpr auto Galois<Order>::operator~() const -> Galois
 
 
 // works on both a + b and a + int
-template <u_int64_t Order>
+template <uint64_t Order>
 constexpr auto Galois<Order>::operator+(const Galois<Order>& b) const-> Galois<Order>
 {
     return {m_value + b.m_value};
 }
 
 
-template <u_int64_t Order>
+template <uint64_t Order>
 constexpr auto operator+(int64_t a, const Galois<Order>& b) -> Galois<Order>
 {
     return {a + b.m_value};
 }
 
 
-template <u_int64_t Order>
+template <uint64_t Order>
 constexpr auto Galois<Order>::operator-(const Galois<Order> &b) const-> Galois<Order>
 {
     return {m_value - b.m_value};
 }
 
 
-template <u_int64_t Order>
+template <uint64_t Order>
 constexpr auto operator-(int64_t a, const Galois<Order> &b) -> Galois<Order>
 {
     return {a - b.m_value};
 }
 
 
-template <u_int64_t Order>
+template <uint64_t Order>
 constexpr auto Galois<Order>::operator*(const Galois &b) const -> Galois
 {
     return {m_value * b.m_value};
 }
 
 
-template <u_int64_t Order>
+template <uint64_t Order>
 constexpr auto operator*(int64_t a, const Galois<Order>& b) -> Galois<Order>
 {
     return {a * b.m_value};
 }
 
 
-template <u_int64_t Order>
+template <uint64_t Order>
 constexpr auto operator/(int64_t lhs, const Galois<Order> &rhs) -> Galois<Order>
 {
     return {lhs * (~rhs).m_value};
 }
 
 
-template <u_int64_t Order>
+template <uint64_t Order>
 constexpr auto Galois<Order>::operator/(const Galois<Order> &rhs) const -> Galois<Order>
 {
     return {*this * ~rhs};
 }
 
 
-template <u_int64_t Order>
+template <uint64_t Order>
 constexpr auto operator==(const int64_t lhs, const Galois<Order> &rhs) -> bool
 { 
     return Galois<Order>(lhs) == rhs;
 }
 
 
-template <u_int64_t Order>
+template <uint64_t Order>
 constexpr auto Galois<Order>::operator==(const Galois<Order> &other) const -> bool
 {
     return m_value == other.m_value;
 }
 
 
-template <u_int64_t Order>
+template <uint64_t Order>
 auto operator!=(const int64_t lhs, const Galois<Order> &rhs) -> bool
 {
     return !(lhs == rhs);
 }
 
 
-template <u_int64_t Order>
+template <uint64_t Order>
 constexpr auto Galois<Order>::operator!=(const Galois<Order> &other) const -> bool
 {
     return !(*this == other);
 }
 
 
-template <u_int64_t Order>
+template <uint64_t Order>
 constexpr auto operator<(const int64_t lhs, const Galois<Order> &rhs) -> bool
 {
     return Galois<Order>(lhs) < rhs;
 }
 
 
-template <u_int64_t Order>
+template <uint64_t Order>
 constexpr auto Galois<Order>::operator<(const Galois &other) const -> bool
 {
     return m_value < other.m_value;
 }
 
 
-template <u_int64_t Order>
+template <uint64_t Order>
 constexpr auto operator<=(const int64_t lhs, const Galois<Order> &rhs) -> bool
 {
     return !(Galois<Order>(lhs) > rhs);
 }
 
 
-template <u_int64_t Order>
+template <uint64_t Order>
 inline constexpr auto Galois<Order>::operator<=(const Galois &other) const -> bool
 {
     return !(*this > other);
 }
 
 
-template <u_int64_t Order>
+template <uint64_t Order>
 constexpr auto operator>(const int64_t lhs, const Galois<Order> &rhs) -> bool
 {
     return Galois<Order>(lhs) > rhs;
 }
 
 
-template <u_int64_t Order>
+template <uint64_t Order>
 inline constexpr auto Galois<Order>::operator>(const Galois &other) const -> bool
 {
     return m_value > other.m_value;
 }
 
 
-template <u_int64_t Order>
+template <uint64_t Order>
 constexpr auto operator>=(const int64_t lhs, const Galois<Order> &rhs) -> bool
 {
     return !(Galois<Order>(lhs) < rhs);
 }
 
 
-template <u_int64_t Order>
+template <uint64_t Order>
 inline constexpr auto Galois<Order>::operator>=(const Galois &other) const -> bool
 {
     return !(*this < other);
@@ -199,7 +199,7 @@ inline constexpr auto Galois<Order>::operator>=(const Galois &other) const -> bo
 
 
 
-template <u_int64_t Order>
+template <uint64_t Order>
 constexpr auto operator<<(std::ostream& stream, const Galois<Order>& a) -> std::ostream&
 {
     stream << a.m_value;
@@ -207,7 +207,7 @@ constexpr auto operator<<(std::ostream& stream, const Galois<Order>& a) -> std::
 }
  
 
-template <u_int64_t Order>
+template <uint64_t Order>
 constexpr auto operator>>(std::istream& stream, Galois<Order>& a) -> std::istream&
 {
     int64_t temp {};
@@ -228,14 +228,14 @@ constexpr auto operator>>(std::istream& stream, Galois<Order>& a) -> std::istrea
 }   
 
 
-template <u_int64_t Order>
+template <uint64_t Order>
 constexpr auto Galois<Order>::value() const noexcept -> int64_t
 {
     return m_value;
 }
 
 
-template<u_int64_t Order>
+template<uint64_t Order>
 constexpr auto Galois<Order>::print_info() noexcept -> void
 {
     fmt::print(fmt::fg(fmt::color::red), "=====================\n");
@@ -246,7 +246,7 @@ constexpr auto Galois<Order>::print_info() noexcept -> void
 }
 
 
-template <u_int64_t Order>
+template <uint64_t Order>
 constexpr auto Galois<Order>::diofantic_eq(int64_t a) const -> int64_t
 {
     uint64_t b {Order};
@@ -270,8 +270,14 @@ constexpr auto Galois<Order>::diofantic_eq(int64_t a) const -> int64_t
 }
 
 
+template <uint64_t Order>
+constexpr auto Galois<Order>::get_order() noexcept -> uint64_t
+{
+    return Order;
+}
 
-template <u_int64_t Order>
+
+template <uint64_t Order>
     constexpr auto Galois<Order>::is_prime() -> bool
 {
     if (Order < 2) 
