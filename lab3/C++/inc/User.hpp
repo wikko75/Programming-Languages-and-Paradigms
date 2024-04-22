@@ -65,9 +65,9 @@ public:
 
     auto decrypt(T c) const -> std::expected<T, KeyError> 
     {
-        if (!is_private_key_set)
+        if (!is_encription_key_set)
         {
-            return std::unexpected(KeyError::private_not_set);
+            return std::unexpected(KeyError::encryption_not_set);
         }
 
         return c / m_encryption_key;
