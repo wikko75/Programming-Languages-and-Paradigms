@@ -1,6 +1,9 @@
 package lab2.Java;
 
-public class Galois {
+import lab2.Java.Exceptions.OrderMismatchException;
+import lab2.Java.Exceptions.PrimeMismatchException;
+
+public class Galois implements GaloisInterface {
 
     private static long s_order = 1234577;
 
@@ -13,92 +16,90 @@ public class Galois {
     }
 
 
-    public static Galois valueOf(long value) {
-        return new Galois(value);
+    public static Galois valueOf(long value, long order) throws PrimeMismatchException {
+        return new Galois(value, order);
     }
-
     
-    private long m_value;
-
-    private long m_order = 1234577;
     
-
-    public Galois() {}
-    
-
-    public Galois(long value, long order) throws Exception {
+    public Galois(long value, long order) throws PrimeMismatchException {
         if (!isPrime(order)) {
-            throw new Exception("Field order must be a prime number");
+            throw new PrimeMismatchException();
         }
         m_order = order;
         m_value = value >= 0 ? value % m_order : (m_order + value);
     }
 
+    @Override
+    public GaloisInterface createObject(long value, long order) {
+        try {
+            return new Galois(value, order);
+        } catch (Exception e) {
 
-    public Galois(long value) {
-        m_value = value >= 0 ? value % m_order : (m_order + value);
+            e.printStackTrace();
+        }
+        return null;
     }
     
-
-    public Galois add(Galois other) throws OrderMismatchException {
+    @Override
+    public GaloisInterface add(GaloisInterface other) throws OrderMismatchException, PrimeMismatchException {
         if (!checkOrder(other)) {
             throw new OrderMismatchException("add()");
         }
-        return new Galois((this.m_value + other.m_value) % this.m_order);
+        return new Galois((this.m_value + other.value()) % this.m_order, this. m_order);
     }
     
-
-    public Galois subtract(Galois other) throws OrderMismatchException {
+    @Override
+    public GaloisInterface subtract(GaloisInterface other) throws OrderMismatchException, PrimeMismatchException {
         if (!checkOrder(other)) {
             throw new OrderMismatchException("sub()");
         }
-
-        long value = (this.m_value - other.m_value);
+        
+        long value = (this.m_value - other.value());
         
         if (value < 0) {
             value = (this.m_order + this.m_value);
-
-            return new Galois(value);
+            
+            return new Galois(value, this.m_order);
         }
         
         value %= this.m_order;
-        return new Galois(value);
+        return new Galois(value, this.m_order);
     }
     
-    
-    public Galois multiply(Galois other) throws OrderMismatchException {
+    @Override
+    public GaloisInterface multiply(GaloisInterface other) throws OrderMismatchException, PrimeMismatchException {
         if (!checkOrder(other)) {
             throw new OrderMismatchException("multiply()");
         }
-
-        return new Galois((this.m_value * other.m_value) % this.m_order);
+        
+        return new Galois((this.m_value * other.value()) % this.m_order, this.m_order);
     }
-
-
-    public Galois divide(Galois other) throws OrderMismatchException {
+    
+    @Override
+    public GaloisInterface divide(GaloisInterface other) throws OrderMismatchException, PrimeMismatchException {
         if (!checkOrder(other)) {
             throw new OrderMismatchException("divide()");
         }
-            
+        
         return this.multiply(other.inverse());
     }
-
-
-    public Galois inverse() {
-        return new Galois(diofanticEq(this.m_value));
+    
+    @Override
+    public Galois inverse() throws PrimeMismatchException {
+        return new Galois(diofanticEq(this.m_value), this.m_order);
     }
     
-
-    public boolean equals(Galois other) throws OrderMismatchException{
+    @Override
+    public boolean equals(GaloisInterface other) throws OrderMismatchException{
         if (!checkOrder(other)) {
             throw new OrderMismatchException("equals()");
         }
         
-        return this.m_value == other.m_value;
+        return this.m_value == other.value();
     }
     
-    
-    public boolean notEquals(Galois other) throws OrderMismatchException{
+    @Override
+    public boolean notEquals(GaloisInterface other) throws OrderMismatchException{
         if (!checkOrder(other)) {
             throw new OrderMismatchException("notEquals()");
         }
@@ -106,17 +107,17 @@ public class Galois {
         return !(this.equals(other));
     }
     
-    
-    public boolean lessThan(Galois other) throws OrderMismatchException {
+    @Override
+    public boolean lessThan(GaloisInterface other) throws OrderMismatchException {
         if (!checkOrder(other)) {
             throw new OrderMismatchException("lessEquals()");
         }
         
-        return this.m_value < other.m_value;
+        return this.m_value < other.value();
     }
     
-    
-    public boolean lessThanOrEqual(Galois other) throws OrderMismatchException {
+    @Override
+    public boolean lessThanOrEqual(GaloisInterface other) throws OrderMismatchException {
         if (!checkOrder(other)) {
             throw new OrderMismatchException("lessThatOrEqual()");
         }
@@ -124,24 +125,23 @@ public class Galois {
         return !greaterThan(other);
     }
     
-    
-    public boolean greaterThan(Galois other) throws OrderMismatchException {
+    @Override
+    public boolean greaterThan(GaloisInterface other) throws OrderMismatchException {
         if (!checkOrder(other)) {
             throw new OrderMismatchException("greaterThan()");
         }
         
-        return this.m_value > other.m_value;
+        return this.m_value > other.value();
     }
     
-    
-    public boolean greaterThanOrEqual(Galois other) throws OrderMismatchException {
+    @Override
+    public boolean greaterThanOrEqual(GaloisInterface other) throws OrderMismatchException {
         if (!checkOrder(other)) {
             throw new OrderMismatchException("greaterThanOrEqual()");
         }
         
         return !lessThan(other);
     }
-    
     
     @Override
     public String toString() {
@@ -150,17 +150,16 @@ public class Galois {
         "]";
     }
     
-
+    @Override
     public long value() {
         return m_value;
     }
-
     
+    @Override
     public long order() {
         return m_order;
     }
-
-
+    
     private boolean isPrime(long n) {
         if (n < 2) {
             return false;
@@ -174,33 +173,34 @@ public class Galois {
         }
         return true;
     }
-
     
-    private boolean checkOrder(Galois other) {
-        if (this.m_order != other.m_order) {
+    private boolean checkOrder(GaloisInterface other) {
+        if (this.m_order != other.order()) {
             return false;
         }
         return true;
     }
     
-
     private long diofanticEq(long a) {
         long b = this.m_order;
         long solution = 0;
         long u = 1;
-    
+        
         while (a != 0) {
             long q = b / a;
             long r = b % a;
-    
+            
             long m = solution - u * q;
-    
+            
             b = a;
             a = r;
             solution = u;
             u = m;
         }
-    
+        
         return solution;
     }
+
+    private long m_value;
+    private long m_order;
 }

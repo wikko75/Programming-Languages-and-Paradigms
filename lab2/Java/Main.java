@@ -7,17 +7,19 @@ public class Main {
 
             Galois.printInfo();
 
-            Galois a = new Galois(15);
+            final long order = 1234577;
 
-            Galois b = new Galois(1234576);
+            Galois a = new Galois(15, order);
+
+            Galois b = new Galois(1234576, order);
 
             System.out.println(
                 String.format("\nInitial values:\n" +
                               "a = %s\nb = %s\n", a.value(), b.value()));
                                              
             System.out.println("a + b = " + a.add(b).value());
-            System.out.println("1234578 + b = " + new Galois(1234578).add(b).value());
-            System.out.println("a + 4 = " + a.add(Galois.valueOf(4)).value());
+            System.out.println("1234578 + b = " + new Galois(1234578, order).add(b).value());
+            System.out.println("a + 4 = " + a.add(Galois.valueOf(4, order)).value());
 
             System.out.println("a - b = " + a.subtract(b).value());
             
