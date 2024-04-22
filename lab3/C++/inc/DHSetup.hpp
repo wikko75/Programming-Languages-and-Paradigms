@@ -103,7 +103,7 @@ private:
         return divisors;
     }
 
-    auto choose_generator() noexcept -> std::optional<uint64_t>
+    auto choose_generator() -> std::optional<uint64_t>
     {
         auto rng {std::random_device{}};
 
@@ -118,10 +118,10 @@ private:
         {
             generator = dist(rng);
 
-            std::vector<uint64_t> divisors { prime_divisors(m_order - 1) };
-            fmt::print("divisors: {}\n", divisors);
+            const std::vector<uint64_t> divisors { prime_divisors(m_order - 1) };
+            // fmt::print("divisors: {}\n", divisors);
 
-            bool is_generator_predicate_satisfied { std::none_of(divisors.begin(), divisors.end(), [*this, generator](uint64_t elem) {
+            bool is_generator_predicate_satisfied { std::none_of(divisors.begin(), divisors.end(), [*this, generator](const uint64_t elem) {
                     return power(generator, (m_order - 1) / elem ) == 1;
                     }) };
             

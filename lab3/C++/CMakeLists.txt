@@ -4,14 +4,14 @@ project(Diffie_Hellman)
 
 # compiler and language setup
 set(
-    CMAKE_CXX_STANDARD 20
+    CMAKE_CXX_STANDARD 23
     CMAKE_C_STANDARD_REQUIRED ON
 )
 
 add_compile_options(
     -Wall 
     -Wextra 
-    -g       
+    -O3      
     -Wuninitialized 
     -Wunused-variable
     -Wshadow
