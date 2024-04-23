@@ -6,15 +6,13 @@ class OrderMismatchException(Exception):
 
 
 class Galois:
-    # default field order
-    _s_order : int = 1234577  
 
-    def __init__(self, value : int = None, order = 1234577):
+    def __init__(self, value : int, order):
         if not self._is_prime(order): 
             raise Exception("Field order must be a prime number")
         self.order = order
         if value is not None:
-            self.value = value % order if value >= 0 else (order - value)
+            self.value = value % order if value >= 0 else (order + value)
 
 
     def __add__(self, other):
@@ -47,7 +45,7 @@ class Galois:
 
 
     def __invert__(self):
-        return Galois(self._diofantic_eq(self.value));
+        return Galois(self._diofantic_eq(self.value), self.order)
 
 
     def __eq__(self, other):
@@ -107,7 +105,7 @@ class Galois:
         print("\n=============\n"
               "Galois\n"
               "Properties:\n"
-              f"Default order: {Galois._s_order}\n"
+            #   f"Default order: {Galois.get_order()}\n"
               "=============\n")
 
 
@@ -118,6 +116,9 @@ class Galois:
                 if n % a == 0:
                     return False
             return True
+    
+    def get_order(self):
+        return self.order
     
 
     def _diofantic_eq(self, a : int) -> int:

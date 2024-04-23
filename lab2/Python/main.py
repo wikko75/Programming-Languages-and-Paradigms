@@ -4,16 +4,17 @@ if __name__ == "__main__":
 
     gl.Galois.print_info()
     
-    a = gl.Galois(15)
-    b = gl.Galois(1234576)
+    order = 1234577
 
+    a = gl.Galois(15, order)
+    b = gl.Galois(1234576, order)
 
     print("\nInitial values:")
     print(f"a = {a }\nb = {b}\n")
 
     print(f"a + b = {a + b}")
-    print(f"1234578 + b = {gl.Galois(1234578) + b}")
-    print(f"a + 4 = {a + gl.Galois(4)}")
+    print(f"1234578 + b = {gl.Galois(1234578, order) + b}")
+    print(f"a + 4 = {a + gl.Galois(4, order)}")
 
     print(f"a - b = {a - b}")
     print(f"a * b = {a * b}")
@@ -35,5 +36,3 @@ if __name__ == "__main__":
 
     print("\nEnd values:")
     print(f"a = {a}\nb = {b}\n")
-
-    #TODO check out testing in python
