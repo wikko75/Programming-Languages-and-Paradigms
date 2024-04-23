@@ -16,8 +16,7 @@ public:
         encryption_not_set
     };
 
-
-    explicit User(DHSetup<T>& DH_setup) 
+    explicit User(const DHSetup<T>& DH_setup) 
         : m_DH_setup {DH_setup}
         , is_private_key_set {false}
         , is_encription_key_set {false}
@@ -74,7 +73,7 @@ public:
     }
 
 private:
-    DHSetup<T>& m_DH_setup;
+    const DHSetup<T>& m_DH_setup;
     bool is_private_key_set;
     bool is_encription_key_set;
 

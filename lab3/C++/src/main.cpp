@@ -94,7 +94,7 @@ bool establish_communication(User<T> &alice, User<T> &bob)
         return false;
     }
     
-    //! for debug purpose 
+    //! for showcase / debug purpose 
     fmt::print("Alice encryption_key: {}\n", alice.m_encryption_key.value());
     fmt::print("Bob encryption_key: {}\n\n", bob.m_encryption_key.value());
 
