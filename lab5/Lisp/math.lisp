@@ -179,3 +179,18 @@
         )
     )
 )
+
+
+(defun primes (n)
+    (cond ( (<= n 1) (print "n <= 1")) 
+          ( (= n 2) 2)
+          ( t (labels 
+                ((get_primes_up_to_n (n &optional (m_list '()) (start 2))
+                    (let ((next_prime (get_next_prime start)))
+                        (if (> next_prime n)
+                            m_list
+                            (get_primes_up_to_n n (cons next_prime m_list) (+ next_prime 1)))
+                    )
+                ))
+                    (get_primes_up_to_n n))))
+)
